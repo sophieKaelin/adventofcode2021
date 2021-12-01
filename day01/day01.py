@@ -26,7 +26,7 @@ print("\n========== Part 2 ==========")
 increasedValSum = 0
 previous = myList[0] + myList[1] + myList[2]
 for i in range(1,output-2):
-    curSum = myList[i] + myList[i+1] + myList[i+2]
+    curSum = previous - myList[i-1] + myList[i+2] # remove first and add new item
     if previous < curSum:
         increasedValSum +=1
     previous = curSum
