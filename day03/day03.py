@@ -16,11 +16,9 @@ itemLen = len(myList[0])
 # print("Number of Items: " + str(output))
 # print("List: " + str(myList) + "\n")
 
-
 # ========== COMMON FUNCTIONS ==========
 def mostCommon(_range, _list):
     counter = [0]*_range
-
     # Combine all first values, combine all second values etc. Pos values are mostly 1's, neg values are mostly 0's
     for code in _list: 
         for i in range(_range):
@@ -28,13 +26,11 @@ def mostCommon(_range, _list):
                 counter[i] +=1
             else:
                 counter[i] -=1
-
     return counter
 
 def deleteElements(indices, _list):
     for i in reversed(indices):
         _list.pop(i)
-    print(len(_list))
 
 print("\n========== Part 1 ==========")
 
@@ -60,8 +56,6 @@ print("Quotient = " + str(gammaRate * epsilonRate))
 
 print("\n========== Part 2 ==========")
 
-# TODO: Don't need to keep track of the rate values, because it is whatever is left over in the list
-
 OxygenList = list(myList)
 OxygenRate = ''
 
@@ -79,10 +73,9 @@ for bit in range(12): # Position in the item
     # Find most common
     if len(_0Indices) <= len(_1Indices):
         deleteElements(_0Indices, OxygenList)
-        OxygenRate += '1'
     else:
         deleteElements(_1Indices, OxygenList)
-        OxygenRate += '0'
+OxygenRate = int(OxygenList[0],2)
 
 C02List = list(myList)
 C02Rate = ''
@@ -101,9 +94,10 @@ for bit in range(12): # Position in the item
     # Find least common
     if len(_0Indices) <= len(_1Indices):
         deleteElements(_1Indices, C02List)
-        C02Rate += '0'
     else:
         deleteElements(_0Indices, C02List)
-        C02Rate += '1'
+C02Rate = int(C02List[0],2)
 
-print(int(C02Rate,2) * int(OxygenRate,2))
+print("C02 Rate:    " + str(C02Rate))
+print("Oxygen Rate: " + str(epsilonRate))
+print("Quotient = " + str(C02Rate * epsilonRate))
