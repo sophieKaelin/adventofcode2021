@@ -56,48 +56,30 @@ print("Quotient = " + str(gammaRate * epsilonRate))
 
 print("\n========== Part 2 ==========")
 
-OxygenList = list(myList)
-OxygenRate = ''
+def getIndexOf0and1s(_list, bit): # Positions of all items with 0 at index 'bit'
+    ones, zeroes = [],[]
+    for itemIndex in range(len(_list)): # Loop through list of items
+            if(_list[itemIndex][bit] == '1'):
+                ones.append(itemIndex)
+            else:
+                zeroes.append(itemIndex)
+    return zeroes, ones
 
-for bit in range(12): # Position in the item
-    _0Indices = [] # Positions of all items with 0 at index 'bit'
-    _1Indices = [] # Ditto ^
-    if len(OxygenList) == 1:
-        OxygenRate = OxygenList[0]
-        break
-    for itemIndex in range(len(OxygenList)): # Loop through list of items
-        if(OxygenList[itemIndex][bit] == '1'):
-            _1Indices.append(itemIndex)
-        else:
-            _0Indices.append(itemIndex)
-    # Find most common
-    if len(_0Indices) <= len(_1Indices):
-        deleteElements(_0Indices, OxygenList)
+def mostOrLeastCommonNarrowed(bit, _list, mode):
+    if bit == 12 or len(_list) == 1:
+        return int(_list[0],2)
+    _0Indices, _1Indices = getIndexOf0and1s(_list, bit)
+    # Delete Elements that are least or most common, depending on "mode"
+    if (len(_0Indices) <= len(_1Indices) and mode == "least") or (len(_0Indices) > len(_1Indices) and mode == "most") :
+        deleteElements(_1Indices, _list)
     else:
-        deleteElements(_1Indices, OxygenList)
-OxygenRate = int(OxygenList[0],2)
+        deleteElements(_0Indices, _list)
+    return mostOrLeastCommonNarrowed(bit+1, _list, mode)
 
-C02List = list(myList)
-C02Rate = ''
-
-for bit in range(12): # Position in the item
-    _0Indices = [] # Positions of all items with 0 at index 'bit'
-    _1Indices = [] # Ditto ^
-    if len(C02List) == 1:
-        C02Rate = C02List[0]
-        break
-    for itemIndex in range(len(C02List)): # Loop through list of items
-        if(C02List[itemIndex][bit] == '1'):
-            _1Indices.append(itemIndex)
-        else:
-            _0Indices.append(itemIndex)
-    # Find least common
-    if len(_0Indices) <= len(_1Indices):
-        deleteElements(_1Indices, C02List)
-    else:
-        deleteElements(_0Indices, C02List)
-C02Rate = int(C02List[0],2)
+OxygenRate = mostOrLeastCommonNarrowed(0, list(myList), "most")
+C02Rate = mostOrLeastCommonNarrowed(0, list(myList), "least")
 
 print("C02 Rate:    " + str(C02Rate))
 print("Oxygen Rate: " + str(epsilonRate))
 print("Quotient = " + str(C02Rate * epsilonRate))
+print(3385170 == C02Rate * OxygenRate)
