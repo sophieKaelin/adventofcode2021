@@ -19,9 +19,10 @@ for key in range(9):
 
 # print("List: " + str(values) + "\n")
 
-print("\n========== Part 1 ==========")
+print("\n========== Part 1&2 ==========")
 
-for day in range(80):
+days = 256 # Adjust this depending on if it's day 1 or 2
+for day in range(days):
     newFish = values[0]
     for vals in range(8): # Shift values down one day
         values[vals] = values[vals+1]
@@ -32,5 +33,3 @@ totalFish =0
 for key in values:
     totalFish += values[key]
 print(totalFish)
-
-print("\n========== Part 2 ==========")
