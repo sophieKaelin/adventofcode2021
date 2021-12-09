@@ -25,7 +25,21 @@ for option in options:
         curFuelCost += abs(option - crab)
     if curFuelCost < minFuelCost:
         minFuelCost = curFuelCost
-        minPosition = crab
+        minPosition = option
 
 print(minFuelCost)
 
+print("\n========== Part 2 ==========")
+
+minFuelCost = sys.maxint
+minPosition = options[0]
+for option in options:
+    curFuelCost = 0
+    for crab in myList:
+        dist = abs(option - crab)+1 # Plus one because the induction formula goes 0 + 1 + 2 + ... dist
+        curFuelCost += dist*(dist-1)/2
+    if curFuelCost < minFuelCost:
+        minFuelCost = curFuelCost
+        minPosition = option
+
+print(minFuelCost)
