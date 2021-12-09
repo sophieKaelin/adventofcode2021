@@ -5,7 +5,6 @@ print("\n========== INPUTING FILE ==========")
 inFile = open("input.txt")
 myList = []
 
-
 for line in inFile:
     # Input line
     temp = line.replace("\n","")
@@ -14,7 +13,6 @@ for line in inFile:
     temp[0] = temp[0].split(" ")
     temp[0].pop(10)
     temp[0] = sorted(temp[0], key=len)
-
     for i in range(10): # Sort values so they are alphabetical 
         temp[0][i] = "".join(sorted(temp[0][i]))
     
@@ -24,8 +22,6 @@ for line in inFile:
     for i in range(4):
         temp[1][i] = "".join(sorted(temp[1][i]))
     myList.append(temp) # Add items to list
-
-# print("List: " + str(myList) + "\n")
 
 # ========== SOLUTION ==========
 
@@ -46,7 +42,7 @@ for line in myList:
     # Find 'b' = characters in "1" - 'c'
     characters['b'] = numbers[1].replace(characters['c'], "")
 
-    # length = 5, which one doesn't have b value is 5. Other letter missing is 'e'
+    # Find 'e' = length is 5, which item doesn't have 'b' value is 5 (other letter missing is 'e'). Item with no 'c' value is "2", last value is "3"
     for index in range(3, 6):
         if characters['b'] not in line[0][index]:
             numbers[5] = line[0][index]
@@ -56,10 +52,10 @@ for line in myList:
         else:
             numbers[3] = line[0][index]
     
-    # Find F -> whatever is missing from "2" characters + 'c'
+    # Find 'f' -> whatever is missing from "2" characters + 'c'
     characters['f'] = "abcdefg".translate(None, ''.join(list(numbers[2]))).replace(characters['c'],"")
 
-    # length = 6, which one doesn't have b value is '6'. which one doesn't have e value is '9'. Which ever is left is '0' and the one missing is "g"
+    # Find 'g' -> length = 6, which one doesn't have b value is '6'. which one doesn't have e value is '9'. Which ever is left is '0' and the one missing is "g"
     for index in range(6, 9):
         if characters['b'] not in line[0][index]:
             numbers[6] = line[0][index]
@@ -69,14 +65,11 @@ for line in myList:
             numbers[0] = line[0][index]
             characters['g'] = "abcdefg".translate(None, ''.join(list(numbers[0])))
     
-    # Find D. Remove 'a' from '9'. compare '4' and '9' which ever one is different is D
+    # Find 'd'. Remove 'a' from '9'. Compare '4' and '9' which ever one is different is D
     characters['d'] = numbers[9].translate(None, ''.join(list(numbers[4]))).replace(characters['a'],'')
 
     # PART 1 SOLUTION Check for 1,4,7,8 in the output values
-    counter1 += line[1].count(numbers[4])
-    counter1 += line[1].count(numbers[1])
-    counter1 += line[1].count(numbers[7])
-    counter1 += line[1].count(numbers[8])
+    counter1 += line[1].count(numbers[4]) + line[1].count(numbers[1]) + line[1].count(numbers[7]) + line[1].count(numbers[8])
 
     # PART 2 find number and add to counter
     output = ""
