@@ -7,6 +7,7 @@ myList = []
 for line in inFile:
     temp = line.replace("\n","")
     temp = list(temp)
+    temp = map(int, temp)
     myList.append(temp)
 
 cols = len(myList[0])
@@ -14,19 +15,40 @@ rows = len(myList)
 print("List: " + str(myList) + "\n")
 
 print("\n========== Part 1 ==========")
+smallest = []
 def inRange(r, c):
-    if (r > 0 or r >= rows) and (c > 0 or c >= cols):
+    if (r >= 0 and r < rows) and (c >= 0 and c < cols):
         return myList[r][c]
     else:
-        return sys.maxInt
+        return sys.maxint
 
 riskLevelSum = 0
-for r in myList:
-    for c in myList[r]:
+# Get all the smallest by comparing neighbors
+for r in range(rows):
+    for c in range(cols):
         surrounding = [inRange(r-1, c), inRange(r+1, c), inRange(r, c-1), inRange(r, c+1)]
-        # If [r][c] is smaller than each in the list
-            # Save that as a small one
-            # If any surrounding are marked as a small one, remove the small one field from theirs
-            # skip 1 column (next won't be smaller, we just checked that)
-            # THIS WONT WORK -> BEST TO MARK ALL THE SMALLER ONES, AND THEN GO THROUGH AGAIN AND NARROW THEM ALL DOWN UNTIL THERE ARE NO ADJACENT SMALL NUMBERS
+        if all(x > myList[r][c] for x in surrounding): # If [r][c] is smaller than each in the list
+            smallest.append(r*10 + c)
+
+print(smallest)
+
+# Check if there are any numbers in smallest which are adjacent
+# for i in reversed(smallest):
+    # smallest = True
+    # if smallest[i] - 1 in smallest:
+        
+    # Check if there are any values smallest[i] - 1, smallest[i] + 1, smallest[i]-rows, smallest[i]+rows
+    # if not smallest:
+    #     smallest.remove(i)
+    # If item is not smallest, delete.
+    # print("doing something later")
+
+# Calculate Risk Level Sum
+for i in smallest:
+    riskLevelSum += myList[i/10][i%10]
+riskLevelSum += len(smallest)
+
 print(riskLevelSum == 15)
+
+# Get list of smallest values
+# Then, loop through list of indexes, check if there is any adjacent, if there is, only keep the smallest
