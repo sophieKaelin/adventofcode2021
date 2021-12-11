@@ -39,3 +39,36 @@ for line in myList:
             break
         prevSize = len(lineCopy)
 print(corrupt)
+
+print("\n========== Part 2 ==========")
+scores = []
+closeChars = ['}', ']', ')', '>']
+
+points = {'{':3, '[':2, '(':1, '<':4}
+
+def brokenCalculator(line):
+    if len(line) == 1:
+        return points[line]
+    return points[line[0]] + 5 * brokenCalculator(line[1:])
+
+for line in reversed(range(len(myList))):
+    lineCopy = "" + myList[line]
+    prevSize = len(lineCopy)
+    while len(lineCopy) > 0:
+        if "{}" in lineCopy:
+            lineCopy = lineCopy.replace("{}", "")
+        if "()" in lineCopy:
+            lineCopy = lineCopy.replace("()", "")
+        if "[]" in lineCopy:
+            lineCopy = lineCopy.replace("[]", "")
+        if "<>" in lineCopy:
+            lineCopy = lineCopy.replace("<>", "")
+
+        if len(lineCopy) == prevSize: # There was nothing removed
+            if not any(sym in lineCopy for sym in closeChars):
+                scores.append(brokenCalculator(lineCopy))
+            break
+        prevSize = len(lineCopy)
+
+scores = sorted(scores)
+print(scores[len(scores)/2])
