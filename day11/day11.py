@@ -12,8 +12,28 @@ print("List: " + str(myList) + "\n")
 print("\n========== Part 1 ==========")
 
 def getAdjacent(i, myList):
-    adj = [i-1, i+1, i-1, i+10, i-11, i+9, i + 11, i-9]
-    return [item for item in adj if item >= 0 and item < 100]
+    adj = []
+    r = i/10
+    c = i%10
+    if r == 0 and c == 0: # Top Left
+        adj.extend([i+1,i+11,i+10])
+    elif r == 0 and c == 9: # Top Right
+        adj.extend([i-1,i+9,i+10])
+    elif r == 9 and c == 0: # Bottom Left
+        adj.extend([i+1,i-9,i-10])
+    elif r == 9 and c == 9: # Bottom Right
+        adj.extend([i-1,i-11,i-10])
+    elif c == 0:
+        adj.extend([i+1, i-10, i+10, i-9, i + 11])
+    elif c == 9:
+        adj.extend([i-1, i-10, i+10, i+9, i -11])
+    elif r == 0:
+        adj.extend([i-1, i+1, i+10, i+9, i + 11])
+    elif r == 9:
+        adj.extend([i-1, i+1, i-10, i-9, i - 11])
+    else:
+        adj.extend([i-1, i+1, i-10, i+10, i-11, i+9, i + 11, i-9])
+    return [i for i in adj if i >= 0 and i < 100]
 
 def shineAdjacent(i, myList):
     adj = getAdjacent(i, myList)
@@ -29,7 +49,7 @@ def shineAdjacent(i, myList):
             myList[index] += 1
 
 flashes = 0
-for loop in range(1):
+for loop in range(100):
     flashed = []
     for i in range(len(myList)):
         if i not in flashed: # Skip if already flashing
@@ -43,4 +63,4 @@ for loop in range(1):
         myList[i] = 0   
 
 print(sorted(flashed))
-print(flashes==35)
+print(flashes)
