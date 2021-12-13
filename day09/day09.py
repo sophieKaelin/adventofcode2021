@@ -60,5 +60,20 @@ riskLevelSum += len(smallestOfSmallest)
 
 print(riskLevelSum)
 
-# Get list of smallest values
-# Then, loop through list of indexes, check if there is any adjacent, if there is, only keep the smallest
+print("\n========== Part 2 ==========")
+
+def findBasin(low, marked):
+    if low[0] < 0 or low[0] >= rows or low[1] < 0 or low[1] >= cols or myList[low[0]][low[1]] == 9 or low in marked:
+        return -1
+    marked.append(low)
+    return 4 + findBasin([low[0]-1, low[1]], marked) + findBasin([low[0]+1, low[1]], marked) + findBasin([low[0], low[1]-1], marked) + findBasin([low[0], low[1]+1], marked)
+
+# Loop through smallest of smallest and see if there
+basins = []
+marked = []
+for coord in smallestOfSmallest:
+    basins.append(1+findBasin(coord, marked))
+basins = sorted(basins)
+numBasins = len(basins)
+
+print(basins[numBasins-1] * basins[numBasins-2] * basins[numBasins-3])
