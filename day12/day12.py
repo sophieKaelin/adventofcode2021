@@ -31,3 +31,23 @@ def findPaths(curKey, used):
                 paths += findPaths(item, used)
     return paths
 print(findPaths('start', ""))
+
+print("\n========== Part 2 ==========")
+
+def findPaths(curKey, used, doubleVisit):
+    paths = 0
+    if curKey == 'end' or curKey not in myList:
+        return 1
+    for item in myList[curKey]:
+        if item != 'start':
+            if str.islower(item):
+                if doubleVisit and item in used or used.count(item) == 2:
+                    continue
+                elif item in used:
+                    paths += findPaths(item, used+"-"+item, True)
+                else:
+                    paths += findPaths(item, used+"-"+item, doubleVisit)
+            elif str.isupper(item):
+                paths += findPaths(item, used, doubleVisit)
+    return paths
+print(findPaths('start', "", False))
