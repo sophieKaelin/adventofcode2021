@@ -22,17 +22,14 @@ print("instructions: " + str(instr) + "\n")
 print("\n========== Part 1 & 2 ==========")
 
 for code in instr:
-    onlyInstruction = code
-    if onlyInstruction[0] is 'y':
-        for i in range(len(coordinates)):
-            if coordinates[i][1] >= onlyInstruction[1]:
-                coordinates[i][1] = 2*onlyInstruction[1] - coordinates[i][1]
-    else:
-        for i in range(len(coordinates)):
-            if coordinates[i][0] >= onlyInstruction[1]:
-                coordinates[i][0] = 2*onlyInstruction[1] - coordinates[i][0]
+    changeIdx = 0
+    if code[0] is 'y':
+        changeIdx = 1
+    for i in range(len(coordinates)):
+        if coordinates[i][changeIdx] >= code[1]:
+            coordinates[i][changeIdx] = 2*code[1] - coordinates[i][changeIdx]
 
-    coordinates = list(set(tuple(sub) for sub in coordinates))
+    coordinates = list(set(tuple(sub) for sub in coordinates)) # Eliminate duplicate entries
     coordinates = map(list, coordinates)
 
 print(coordinates)
