@@ -19,18 +19,21 @@ for line in inFile:
 print("Coordinates: " + str(coordinates) + "\n")
 print("instructions: " + str(instr) + "\n")
 
-print("\n========== Part 1 ==========")
+print("\n========== Part 1 & 2 ==========")
 
-onlyInstruction = instr[0]
-if onlyInstruction[0] is 'y':
-    for i in range(len(coordinates)):
-        if coordinates[i][1] > onlyInstruction[1]:
-            coordinates[i][1] = onlyInstruction[1] - (coordinates[i][1] - onlyInstruction[1])
-else:
-    for i in range(len(coordinates)):
-        if coordinates[i][0] > onlyInstruction[1]:
-            coordinates[i][0] = onlyInstruction[1] - (coordinates[i][0] - onlyInstruction[1])
+for code in instr:
+    onlyInstruction = code
+    if onlyInstruction[0] is 'y':
+        for i in range(len(coordinates)):
+            if coordinates[i][1] >= onlyInstruction[1]:
+                coordinates[i][1] = 2*onlyInstruction[1] - coordinates[i][1]
+    else:
+        for i in range(len(coordinates)):
+            if coordinates[i][0] >= onlyInstruction[1]:
+                coordinates[i][0] = 2*onlyInstruction[1] - coordinates[i][0]
 
-coordinates = list(set(tuple(sorted(sub)) for sub in coordinates))
+    coordinates = list(set(tuple(sub) for sub in coordinates))
+    coordinates = map(list, coordinates)
 
+print(coordinates)
 print(len(coordinates))
