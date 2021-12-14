@@ -13,9 +13,9 @@ for line in inFile:
 
 # Store number of times a character appears
 instances = dict(Counter(template))
-print(instances)
+
 valuesForInstances = list(set(myList.values()))
-print(valuesForInstances)
+
 for item in valuesForInstances:
     if item not in instances:
         instances[item] = 0
