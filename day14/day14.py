@@ -11,24 +11,31 @@ for line in inFile:
     if len(temp) > 1:
         myList[temp[0]] = temp[1]
 
+# Store number of times a character appears
+instances = dict(Counter(template))
+print(instances)
+valuesForInstances = list(set(myList.values()))
+print(valuesForInstances)
+for item in valuesForInstances:
+    if item not in instances:
+        instances[item] = 0
+
 print("List: " + str(myList) + "\n")
 print("Template: " + str(template) + "\n")
+print("Instances: " + str(instances) + "\n")
 
 print("\n========== Part 1 ==========")
-
-for loop in range(10):
+steps = 10
+for loop in range(steps):
+    print(loop)
     tempList = list(template)
-    middle = []
+    newTemplate = ""
     for i in range(0, len(template)-1):
-        middle.append(myList[template[i:i+2]])
+        newTemplate += tempList[i] + myList[template[i:i+2]]
+        instances[myList[template[i:i+2]]] += 1
+    newTemplate += tempList[len(tempList)-1]
+    template = newTemplate
 
-    template = ""
-    for i in range(0, len(middle)):
-        template += tempList[i] + middle[i]
-    template += tempList[len(tempList)-1]
-    
-print(len(template))
-instances = Counter(template)
 _min = min(instances, key=instances.get)
 _max = max(instances, key=instances.get)
 
